@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mrntando-sbuda-studio/static/css/main.374c0693.css",
+    "main.js": "/mrntando-sbuda-studio/static/js/main.3b229387.js",
+    "index.html": "/mrntando-sbuda-studio/index.html",
+    "main.374c0693.css.map": "/mrntando-sbuda-studio/static/css/main.374c0693.css.map",
+    "main.3b229387.js.map": "/mrntando-sbuda-studio/static/js/main.3b229387.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.374c0693.css",
+    "static/js/main.3b229387.js"
+  ]
+}
