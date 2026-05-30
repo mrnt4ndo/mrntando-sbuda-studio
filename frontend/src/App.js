@@ -6,6 +6,9 @@ import TrackTimeline from './components/TrackTimeline';
 import AnalysisPanel from './components/AnalysisPanel';
 import MixerPanel from './components/MixerPanel';
 import WaveVisualizer from './components/WaveVisualizer';
+import LyricsPanel from './components/LyricsPanel';
+import EffectsRack from './components/EffectsRack';
+import SongStructure from './components/SongStructure';
 import './App.css';
 
 const API = process.env.REACT_APP_API_URL || '';
@@ -24,8 +27,11 @@ export default function App() {
   const [bpm, setBpm] = useState(105);
   const [activeBeats, setActiveBeats] = useState({});
   const [currentBeat, setCurrentBeat] = useState(-1);
+  const [currentBar, setCurrentBar] = useState(0);
   const [toast, setToast] = useState(null);
   const [drumsCustom, setDrumsCustom] = useState(null);
+  const [studioTab, setStudioTab] = useState('mix'); // mix | effects | lyrics | structure
+  const barCountRef = useRef(0);
   
   const synthsRef = useRef({});
   const seqRef = useRef(null);
@@ -197,6 +203,10 @@ export default function App() {
       }
 
       beat = (beat + 1) % totalSteps;
+      if (beat === 0) {
+        barCountRef.current = (barCountRef.current + 1) % 44;
+        setCurrentBar(barCountRef.current);
+      }
     }, Array.from({length: totalSteps}, (_, i) => i), '16n');
 
     seq.loop = true;
@@ -425,20 +435,44 @@ export default function App() {
                 />
               </div>
 
-              {/* RIGHT: Mixer + Pads */}
+              {/* RIGHT: Tabbed panel */}
               <div className="studio-right">
-                <div className="panel-title">🎚 Mixer</div>
-                <MixerPanel
-                  volumes={volumes}
-                  muted={muted}
-                  onVolume={(id, val) => setVolumes(prev => ({...prev, [id]: val}))}
-                  onMute={(id) => setMuted(prev => ({...prev, [id]: !prev[id]}))}
-                  isPlaying={isPlaying}
-                />
-                <div className="panel-title" style={{marginTop:'20px'}}>🎹 Instrument Pads</div>
-                <InstrumentPad synths={synthsRef.current} arrangement={arrangement} />
+                <div className="studio-tabs">
+                  {[
+                    {id:'mix',      label:'🎚 Mix'},
+                    {id:'effects',  label:'🎛 FX'},
+                    {id:'lyrics',   label:'📝 Lyrics'},
+                    {id:'pads',     label:'🎹 Pads'},
+                  ].map(t => (
+                    <button key={t.id}
+                      className={`studio-tab ${studioTab === t.id ? 'active' : ''}`}
+                      onClick={() => setStudioTab(t.id)}>
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+
+                {studioTab === 'mix' && (
+                  <MixerPanel
+                    volumes={volumes}
+                    muted={muted}
+                    onVolume={(id, val) => setVolumes(prev => ({...prev, [id]: val}))}
+                    onMute={(id) => setMuted(prev => ({...prev, [id]: !prev[id]}))}
+                    isPlaying={isPlaying}
+                  />
+                )}
+                {studioTab === 'effects' && <EffectsRack />}
+                {studioTab === 'lyrics' && (
+                  <LyricsPanel genre={arrangement.genre} trackTitle={trackTitle} />
+                )}
+                {studioTab === 'pads' && (
+                  <InstrumentPad synths={synthsRef.current} arrangement={arrangement} />
+                )}
               </div>
             </div>
+
+            {/* Song Structure */}
+            <SongStructure currentBar={currentBar} isPlaying={isPlaying} />
 
             {/* Chord / Key info */}
             <div className="chord-strip">
