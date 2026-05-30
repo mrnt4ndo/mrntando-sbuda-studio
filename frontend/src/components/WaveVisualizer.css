@@ -1,0 +1,12 @@
+.wave-vis {
+  display: flex; align-items: center; gap: 3px; height: 60px;
+}
+.wave-bar {
+  width: 4px; height: 8px; background: var(--border);
+  border-radius: 2px; transition: height 0.1s ease;
+}
+.wave-vis.active .wave-bar {
+  background: linear-gradient(to top, var(--accent), var(--accent2));
+  animation: waveform 1s ease-in-out infinite;
+  box-shadow: 0 0 4px var(--accent);
+}

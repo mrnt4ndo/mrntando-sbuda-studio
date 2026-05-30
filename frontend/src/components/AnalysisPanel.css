@@ -1,0 +1,43 @@
+.analysis-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.ap-header { display: flex; align-items: center; gap: 12px; }
+.ap-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); flex: 1; }
+.ap-badge { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+.ap-badge.ok { background: rgba(0,255,176,0.1); border: 1px solid var(--green); color: var(--green); }
+.ap-badge.warn { background: rgba(255,179,71,0.1); border: 1px solid var(--accent2); color: var(--accent2); }
+
+.ap-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.ap-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: border-color 0.2s;
+}
+.ap-card:hover { border-color: rgba(255,255,255,0.15); }
+.ap-card-wide { grid-column: 1 / -1; align-items: flex-start; }
+
+.ap-card-icon { font-size: 20px; margin-bottom: 2px; }
+.ap-card-value { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; }
+.ap-card-value span { font-size: 14px; color: var(--muted); }
+.ap-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); font-weight: 700; }
+.mood-val { color: var(--mood-color, var(--green)); text-transform: capitalize; }
+.genre-val { font-size: 18px; text-transform: capitalize; }
+
+.energy-bar-wrap {
+  width: 100%; height: 24px;
+  background: var(--bg); border-radius: 6px; overflow: hidden; margin-top: 8px;
+}
+.energy-bar {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent3), var(--green));
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 8px; min-width: 40px;
+  transition: width 1s ease;
+  box-shadow: 0 0 12px rgba(0,229,255,0.3);
+}
+.energy-label { font-size: 11px; font-weight: 700; color: var(--bg); font-family: var(--font-mono); }

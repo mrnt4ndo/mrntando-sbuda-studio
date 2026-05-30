@@ -1,0 +1,37 @@
+.inst-pad {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+}
+
+.pad-btn {
+  position: relative; overflow: hidden;
+  aspect-ratio: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px; cursor: pointer;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  transition: all 0.12s;
+  user-select: none; -webkit-user-select: none;
+}
+.pad-btn:hover {
+  border-color: var(--pad-color, var(--accent));
+  background: rgba(255,255,255,0.05);
+  transform: translateY(-1px);
+}
+.pad-btn.hit {
+  background: var(--pad-color, var(--accent));
+  border-color: var(--pad-color, var(--accent));
+  transform: scale(0.95);
+  box-shadow: 0 0 20px var(--pad-color, var(--accent));
+}
+
+.pad-emoji { font-size: 22px; }
+.pad-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.pad-btn.hit .pad-label { color: white; }
+
+.pad-ripple {
+  position: absolute; inset: 0; border-radius: 12px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  animation: pulse-ring 0.3s ease-out forwards;
+  pointer-events: none;
+}
